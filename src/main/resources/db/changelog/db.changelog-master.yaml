@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: DDL/changelog-master.yaml
+      relativeToChangelogFile: true

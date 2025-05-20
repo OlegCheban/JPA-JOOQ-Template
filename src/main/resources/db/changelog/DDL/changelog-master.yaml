@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - logicalFilePath: ../src/main/resources/db/changelog/DDL/changelog-master.yaml
+  - changeSet:
+      id: DDL-1
+      author: YourName
+      changes:
+        - sqlFile:
+            path: sql/ddl.sql
+            relativeToChangelogFile: true
+            splitStatements: false
