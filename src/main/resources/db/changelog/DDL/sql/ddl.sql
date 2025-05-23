@@ -2,7 +2,12 @@
 
 --changeset ddl
 
-CREATE TABLE customer (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+drop table if exists person;
+create table person (
+  id bigint not null,
+  name varchar(255),
+  primary key (id)
 );
+
+drop sequence if exists person_seq;
+create sequence person_seq start with 1 increment by 50;
