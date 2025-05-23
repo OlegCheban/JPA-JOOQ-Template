@@ -10,8 +10,7 @@ public class Person {
     private Long id;
     private String name;
 
-    public Person(Long id, String name) {
-        this.id = id;
+    public Person(String name) {
         this.name = name;
     }
 
