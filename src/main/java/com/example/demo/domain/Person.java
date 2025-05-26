@@ -14,6 +14,9 @@ public class Person {
         this.name = name;
     }
 
+    public Person() {
+    }
+
     public Long getId() {
         return id;
     }

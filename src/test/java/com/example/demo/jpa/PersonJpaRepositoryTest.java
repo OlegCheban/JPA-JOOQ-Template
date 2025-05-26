@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.example.demo.jpa;
 
-import com.example.demo.dao.repository.PersonRepository;
+import com.example.demo.dao.repository.PersonJpaRepository;
 import com.example.demo.domain.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Testcontainers
 @DataJpaTest
-public class PersonRepositoryTest {
+public class PersonJpaRepositoryTest {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonJpaRepository personJpaRepository;
 
     @Container
     @ServiceConnection
@@ -34,8 +34,8 @@ public class PersonRepositoryTest {
     @Test
     void shouldSaveAndRetrievePerson() {
         Person person = new Person("John Doe");
-        Person savedPerson = personRepository.save(person);
-        Optional<Person> foundPerson = personRepository.findById(savedPerson.getId());
+        Person savedPerson = personJpaRepository.save(person);
+        Optional<Person> foundPerson = personJpaRepository.findByName(savedPerson.getName());
 
         assertThat(foundPerson).isPresent();
         assertThat(foundPerson.get().getName()).isEqualTo("John Doe");
