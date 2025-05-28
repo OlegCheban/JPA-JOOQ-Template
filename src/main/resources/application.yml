@@ -4,6 +4,12 @@ spring:
 
   jpa:
     hibernate.ddl-auto: validate
+    open-in-view: false
+    show-sql: true
+
+  datasource:
+    hikari:
+      auto-commit: false
 
   liquibase:
     liquibase-schema: public

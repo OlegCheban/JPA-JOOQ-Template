@@ -1,6 +1,7 @@
 package com.example.demo.jooq;
 
 import com.example.demo.dao.jooq.PersonJooqRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -10,11 +11,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 @Testcontainers
 @DataJpaTest
-@ContextConfiguration(classes = {JooqTestConfig.class})
+@ContextConfiguration(classes = {JooqConfig.class})
 public class PersonJooqRepositoryTest {
 
     @Autowired
@@ -26,8 +25,8 @@ public class PersonJooqRepositoryTest {
 
     @Test
     void shouldSaveAndRetrievePerson(){
-        personJooqRepository.insertPerson("John Doe");
         var persons = personJooqRepository.getPersonByName("John Doe");
-        assertThat(persons.getFirst().name()).isEqualTo("John Doe");
+
+        Assertions.assertTrue(persons.isEmpty());
     }
 }

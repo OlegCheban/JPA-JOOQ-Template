@@ -3,8 +3,10 @@ A Spring Boot template for high-performance database operations, combining JPA (
 
 ## 🌟 **Why This Template?**
 Jumpstart your projects with zero boilerplate setup! This template delivers:
+- **Enhanced database connection management**: A database connection is used only when it's really necessary.
+- **Liquibase session-level LockService implementations**: Tired of dealing with locks on the DATABASECHANGELOGLOCK table? Session-level locks get automatically released if the database connection drops.
 - **Pre-configured modern stack**: Spring Boot, JPA, JOOQ, Liquibase, and Testcontainers work seamlessly together out of the box.
 - **Always up-to-date**: All libraries use the latest stable versions, enforced by Dependabot for automatic security/version updates.
-- **Liquibase session-level LockService implementations**: Tired of dealing with locks on the DATABASECHANGELOGLOCK table? Session-level locks get automatically released if the database connection drops.
+
 
 

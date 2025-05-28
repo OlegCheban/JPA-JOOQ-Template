@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import javax.sql.DataSource;
 
 @TestConfiguration
-public class JooqTestConfig {
+public class JooqConfig {
 
     @Bean
     public DSLContext dslContext(DataSource dataSource) {
