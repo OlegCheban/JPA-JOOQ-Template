@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Testcontainers
 @DataJpaTest
 @ContextConfiguration(classes = {JpaConfig.class})
-public class PersonJpaRepositoryTest {
+public class PersonNameJpaRepositoryTest {
 
     @Autowired
     private PersonJpaRepository personJpaRepository;
@@ -41,10 +41,11 @@ public class PersonJpaRepositoryTest {
     @Test
     @Transactional
     void shouldSaveAndRetrievePerson() {
-        personService.addPerson();
-        Optional<Person> foundPerson = personJpaRepository.findByName("John Doe");
+        final String name = "John Doe";
+        personService.addPerson(name);
+        Optional<Person> foundPerson = personJpaRepository.findByName(name);
 
         assertThat(foundPerson).isPresent();
-        assertThat(foundPerson.get().getName()).isEqualTo("John Doe");
+        assertThat(foundPerson.get().getName()).isEqualTo(name);
     }
 }

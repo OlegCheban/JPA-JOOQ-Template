@@ -14,7 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @DataJpaTest
 @ContextConfiguration(classes = {JooqConfig.class})
-public class PersonJooqRepositoryTest {
+public class PersonNameJooqRepositoryTest {
 
     @Autowired
     private PersonJooqRepository personJooqRepository;

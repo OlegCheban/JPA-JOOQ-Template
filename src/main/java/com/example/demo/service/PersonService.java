@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.projection.PersonName;
 import com.example.demo.dao.repository.PersonJpaRepository;
 import com.example.demo.domain.Person;
 import org.springframework.stereotype.Service;
@@ -17,28 +18,36 @@ public class PersonService {
     }
 
     @Transactional
-    public void addPerson(){
-        Person person = new Person("John Doe");
+    public void addPerson(String name) {
+        Person person = new Person(name);
         repository.save(person);
     }
 
+    public PersonName findByName(String name) {
+        return repository.findByName(name, PersonName.class);
+    }
+
     @Transactional
-    public void withNoDatabaseCallBefore(){
+    public void withNoDatabaseCallBefore() {
+        //database connection isn't going to be received here
         noDatabaseCall();
-        //transaction starts here because hikari auto-commit = false
-        repository.findByName("Test");
+
+        //database connection is going to be received here because hikari auto-commit = false
+        repository.save(new Person("Test"));
     }
 
-    //@Transactional!!!
-    public void withNoDatabaseCallAfter(){
+
+    //in this case, we set the transaction scope via TransactionTemplate
+    //@Transactional
+    public void withNoDatabaseCallAfter() {
         transactionTemplate.executeWithoutResult(transactionStatus -> {
-            repository.findByName("Test");
-        });
-        //transaction stops here
+            repository.save(new Person("Test"));
+        }); //the transaction ends here, and the database connection is released immediately
+
         noDatabaseCall();
     }
 
-    private void noDatabaseCall(){
+    private void noDatabaseCall() {
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
