@@ -25,10 +25,9 @@ spring:
 ```
 
 **Why disabled:**
-- **Transaction control**: With Spring's `@Transactional` annotations managing transaction boundaries, auto-commit should be disabled to prevent conflicts between Spring's transaction management and connection-level auto-commit behavior.
-- **Performance optimization**: Reduces overhead by eliminating unnecessary commit operations.
-- **Consistency**: Ensures all database operations within a transaction are committed together, maintaining ACID properties.
-- **Best practice alignment**: Industry standard for JPA/Hibernate applications where framework-managed transactions are preferred over connection-level transaction management.
+- **Connection management efficiency**: A positive side effect of this setting is improved database connection management. Spring will not open a database connection until it reaches the point where it actually needs to access the database. This reduces idle connections and improves resource utilization. 
+- **Best practice alignment**: A good rule of thumb is to always disable auto-commit in HikariCP (or other connection pools) when using local JPA transactions.
+
 
 
 ### Liquibase Session-Level LockService

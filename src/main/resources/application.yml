@@ -7,8 +7,6 @@ spring:
     open-in-view: false
     show-sql: true
 
-  #  As rule of thumb, for local-resource JPA Transactions, it is always good
-  #  practice to configure the connection pool (e.g HikariCP) to disable auto-commit
   datasource:
     hikari:
       auto-commit: false
