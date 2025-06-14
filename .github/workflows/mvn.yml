@@ -28,6 +28,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
         env:
-          BOT_DB_URL: ${{ secrets.DEMO_DB_URL }}
-          BOT_DB_USER: ${{ secrets.DEMO_DB_USER }}
-          BOT_DB_PASS: ${{ secrets.DEMO_DB_PASS }}
+          DEMO_DB_URL: ${{ secrets.DEMO_DB_URL }}
+          DEMO_DB_USER: ${{ secrets.DEMO_DB_USER }}
+          DEMO_DB_PASS: ${{ secrets.DEMO_DB_PASS }}
