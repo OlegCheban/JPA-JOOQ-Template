@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    hikari:
+      auto-commit: true
+
+logging:
+  level:
+    org.jooq.tools.LoggerListener: DEBUG
