@@ -15,6 +15,14 @@ spring:
     liquibase-schema: public
     enabled: true
 
+decorator:
+  datasource:
+    flexy-pool:
+      threshold:
+        connection:
+          acquisition: 50
+          lease: 1000
+
 #logging:
 #  level:
 #    org.hibernate.engine.transaction.internal.TransactionImpl: DEBUG
