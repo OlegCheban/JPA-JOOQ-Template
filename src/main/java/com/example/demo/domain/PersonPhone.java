@@ -8,7 +8,10 @@ public class PersonPhone extends BaseEntity {
 
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Person.class)
+    //This is the most natural and efficient way of mapping a database one-to-many database association.
+    //@ManyToOne annotation on the child side is everything you need
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
     private Person person;
 
     public String getPhoneNumber() {
@@ -28,5 +31,9 @@ public class PersonPhone extends BaseEntity {
     }
 
     public PersonPhone() {
+    }
+
+    public PersonPhone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

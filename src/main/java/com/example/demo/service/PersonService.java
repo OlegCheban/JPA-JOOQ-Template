@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.projection.PersonName;
 import com.example.demo.dao.repository.PersonJpaRepository;
 import com.example.demo.domain.Person;
+import com.example.demo.domain.PersonPhone;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -20,6 +21,8 @@ public class PersonService {
     @Transactional
     public void addPerson(String name) {
         Person person = new Person(name);
+        person.addPhone(new PersonPhone("12345"));
+        person.addPhone(new PersonPhone("23456"));
         repository.save(person);
     }
 
