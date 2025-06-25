@@ -45,3 +45,86 @@ spring:
 **Why session-level:**
 - **Automatic lock cleanup**: Session-level locks are automatically released when the database connection drops, eliminating the common issue of stuck locks in the `DATABASECHANGELOGLOCK` table.
 - **Improved reliability**: Prevents deployment failures caused by previous migration processes that terminated unexpectedly without releasing their locks.
+
+## 📚 Cookbook
+
+This section contains practical examples and best practices for optimizing database operations in Spring Boot applications.
+
+### 🚫 Transaction Management: Avoid Long-Running Transactions
+
+**Problem:** Using `@Transactional` on methods that perform non-database operations after database calls keeps database connections open unnecessarily, leading to connection pool exhaustion and poor performance.
+
+#### ❌ DON'T DO THIS
+
+```java
+@Service
+public class PersonService {
+    private final PersonJpaRepository repository;
+    
+    public PersonService(PersonJpaRepository repository) {
+        this.repository = repository;        
+    }
+    
+    @Transactional
+    public void withNoDatabaseCallAfter() {
+        repository.save(new Person("Test"));
+        noDatabaseCall(); // ⚠️ Transaction remains open during this call
+    }
+    
+    private void noDatabaseCall() {
+        try {
+            Thread.sleep(2000); // Simulates non-DB work (e.g., external API calls, file processing)
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+
+**Issues:**
+- Database connection held for 2+ seconds unnecessarily
+- Connection pool can be exhausted under load
+- Poor resource utilization
+
+#### ✅ INSTEAD, DO THIS
+
+```java
+@Service
+public class PersonService {
+    private final PersonJpaRepository repository;
+    private final TransactionTemplate transactionTemplate;
+    
+    public PersonService(PersonJpaRepository repository, TransactionTemplate transactionTemplate) {
+        this.repository = repository;
+        this.transactionTemplate = transactionTemplate;
+    }
+    
+    public void withNoDatabaseCallAfter() {
+        transactionTemplate.executeWithoutResult(transactionStatus -> {
+            repository.save(new Person("Test"));
+        }); // ✅ Transaction closes here
+        
+        noDatabaseCall(); // Non-DB work happens outside transaction
+    }
+    
+    private void noDatabaseCall() {
+        try {
+            Thread.sleep(2000); // Now runs without holding DB connection
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+
+**Benefits:**
+- Database connection released immediately after `save()` operation
+- Better connection pool utilization
+- Improved application scalability
+- Clear separation of transactional and non-transactional code
+
+**Key Principle:** Keep transactions as short as possible. Only database operations should run within transactional boundaries.
+
+---
+
+> 💡 **Tip**: More cookbook examples will be added as the template evolves. Each example focuses on real-world performance optimization scenarios.
