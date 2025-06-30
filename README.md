@@ -1,7 +1,9 @@
 [![Build](https://github.com/OlegCheban/JPA-JOOQ-Template/actions/workflows/mvn.yml/badge.svg)](https://github.com/OlegCheban/JPA-JOOQ-Template/actions/workflows/mvn.yml)
 
 # JPA-JOOQ-Template
-A pre-configured, performance-oriented Spring Boot template for database operations, combining JPA (Hibernate) for ORM and JOOQ for type-safe SQL. The template is optimized for enterprise-grade, high-performance database operations rather than simple CRUD services. The configurations have been implemented to maximize performance and resource efficiency.
+A pre-configured, performance-oriented Spring Boot template and cookbook for database operations, combining JPA (Hibernate) for ORM and JOOQ for type-safe SQL. The template is optimized for enterprise-grade, high-performance database operations rather than simple CRUD services. The configurations have been implemented to maximize performance and resource efficiency.
+
+**Tech Stack**: Spring Boot, Maven, Hibernate, JOOQ, Liquibase, PostgreSQL, HikariCP, JUnit, Testcontainers.   
 
 ## Key Features
 
