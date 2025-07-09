@@ -52,7 +52,7 @@ spring:
 
 This section contains practical examples and best practices for optimizing database operations in Spring Boot applications.
 
-### 🚫 Transaction Management: Avoid Long-Running Transactions
+### 1. Avoid long-running transactions
 
 **Problem:** Using `@Transactional` on methods that perform non-database operations after database calls keeps database connections open unnecessarily, leading to connection pool exhaustion and poor performance.
 
@@ -126,6 +126,46 @@ public class PersonService {
 - Clear separation of transactional and non-transactional code
 
 **Key Principle:** Keep transactions as short as possible. Only database operations should run within transactional boundaries.
+
+
+### 2. Use `getReferenceById()` when you only need a reference
+
+**Problem:** Fetching a full entity (findById) when you only need a reference (e.g., for setting relationships) leads to unnecessary database queries and increased memory usage.
+
+#### ❌ DON'T DO THIS
+
+```java
+public Order createOrderForCustomer(Long customerId, BigDecimal amount) {
+    Customer customer = customerRepository.findById(customerId);
+    Order newOrder = new Order();
+    newOrder.setCustomer(customer);
+    newOrder.setTotalAmount(amount);
+    return orderRepository.save(newOrder);
+}
+```
+
+**Issues:**
+- Performs a database query to load the entire Customer entity
+- Slower under high-load scenarios or with large associated entities
+
+#### ✅ INSTEAD, DO THIS
+
+```java
+public Order createOrderForCustomer(Long customerId, BigDecimal amount) {
+    Customer customer = customerRepository.getReferenceById(customerId);
+    Order newOrder = new Order();
+    newOrder.setCustomer(customer);
+    newOrder.setTotalAmount(amount);
+    return orderRepository.save(newOrder);
+}
+```
+
+**Benefits:**
+- No unnecessary SQL SELECT query is executed
+- Better overall performance, especially in write-heavy or large-domain models
+
+**Key Principle:** Use `getReferenceById()` when you only need the entity reference, not its data.
+
 
 ---
 
