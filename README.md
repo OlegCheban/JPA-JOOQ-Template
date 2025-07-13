@@ -52,7 +52,7 @@ spring:
 
 This section contains practical examples and best practices for optimizing database operations in Spring Boot applications.
 
-### 1. Avoid long-running transactions
+### 1. Optimize Transaction Boundaries for Better Performance
 
 **Problem:** Using `@Transactional` on methods that perform non-database operations after database calls keeps database connections open unnecessarily, leading to connection pool exhaustion and poor performance.
 
@@ -125,7 +125,7 @@ public class PersonService {
 - Improved application scalability
 - Clear separation of transactional and non-transactional code
 
-**Key Principle:** Keep transactions as short as possible. Only database operations should run within transactional boundaries.
+**Key Principle:** Keep transactions as short as possible and only for database operations. While transactions are necessary for maintaining data consistency, they should be scoped tightly around database operations only. Non-database operations like external API calls, file processing, or lengthy computations should occur outside transactional boundaries to avoid retaining database connections unnecessarily.
 
 
 ### 2. Use `getReferenceById()` when you only need a reference

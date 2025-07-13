@@ -1,0 +1,4 @@
+
+### Add a person
+GET http://localhost:8080/demo/test?name=Oleg
+

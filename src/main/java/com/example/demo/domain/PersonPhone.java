@@ -36,4 +36,9 @@ public class PersonPhone extends BaseEntity {
     public PersonPhone(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public PersonPhone(Person person, String phoneNumber) {
+        this.person = person;
+        this.phoneNumber = phoneNumber;
+    }
 }
