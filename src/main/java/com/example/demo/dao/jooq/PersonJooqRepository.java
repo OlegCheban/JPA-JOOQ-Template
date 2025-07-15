@@ -1,6 +1,6 @@
 package com.example.demo.dao.jooq;
 
-import com.example.demo.dao.projection.PersonName;
+import com.example.demo.dao.projection.BriefPersonInfo;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +17,10 @@ public class PersonJooqRepository {
         this.dsl = dsl;
     }
 
-    public List<PersonName> getPersonByName(String name){
-        return dsl.select(PERSON.ID, PERSON.NAME)
+    public List<BriefPersonInfo> getPersonByName(String name){
+        return dsl.select(PERSON.ID, PERSON.NAME, PERSON.AGE)
                 .from(PERSON)
                 .where(PERSON.NAME.eq(name))
-                .fetchInto(PersonName.class);
+                .fetchInto(BriefPersonInfo.class);
     }
 }

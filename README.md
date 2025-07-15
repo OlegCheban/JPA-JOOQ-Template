@@ -166,6 +166,67 @@ public Order createOrderForCustomer(Long customerId, BigDecimal amount) {
 
 **Key Principle:** Use `getReferenceById()` when you only need the entity reference, not its data.
 
+### Dynamic Projections: Avoid Repository Method Duplication
+
+**Problem:** Creating separate repository methods for each projection type leads to repository bloat, and maintenance overhead. Each new projection requires a new method signature.
+
+#### ❌ DON'T DO THIS
+
+```java
+@Repository
+public interface PersonJpaRepository extends JpaRepository<Person, Long> {
+    BriefPersonInfo findBriefPersonInfoById(Long id);
+    PersonDTO findPersonDtoById(Long id);
+    PersonContact findPersonContactById(Long id);
+    // ... more methods for each projection type
+}
+
+public record BriefPersonInfo(Long id, String name, Integer age) {}
+public record PersonDTO(Long id, String name, String email, Integer age) {}
+public record PersonContact(String name, String email, String phone) {}
+```
+
+**Issues:**
+- Repository interface becomes cluttered with similar methods
+- Difficult to maintain as new projection types are added
+
+#### ✅ INSTEAD, DO THIS
+
+```java
+@Repository
+public interface PersonJpaRepository extends JpaRepository<Person, Long> {
+    <T> T findById(Long id, Class<T> clazz);
+}
+
+@Service
+public class Projections {
+    private final PersonJpaRepository personRepository;
+    
+    public BriefPersonInfo findBriefPersonInfo(Long personId) {
+        return personRepository.findById(personId, BriefPersonInfo.class);
+    }
+}
+```
+
+**Benefits:**
+- **Single repository method**: One generic method handles all projection types
+- **Type safety**: Compile-time type checking with generics
+- **Maintainability**: Adding new projections only requires creating the record class
+- **Reusability**: Same pattern works for any query method (findBy, findAll, etc.)
+
+**Advanced Usage:**
+
+```java
+@Repository
+public interface PersonJpaRepository extends JpaRepository<Person, Long> {
+    <T> T findById(Long id, Class<T> clazz);
+    <T> List<T> findByAgeGreaterThan(Integer age, Class<T> clazz);
+    <T> Optional<T> findByEmail(String email, Class<T> clazz);
+    <T> List<T> findByNameContainingIgnoreCase(String name, Class<T> clazz);
+}
+```
+
+**Key Principle:** Use dynamic projections to eliminate repository method proliferation while maintaining type safety and query flexibility. This pattern scales well as your application grows and new projection requirements emerge.
 
 ---
 

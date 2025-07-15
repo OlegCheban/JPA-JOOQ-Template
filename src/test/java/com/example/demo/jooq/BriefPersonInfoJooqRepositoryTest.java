@@ -21,7 +21,7 @@ import static org.jooq.codegen.demo.Tables.PERSON;
 @DataJpaTest
 @ContextConfiguration(classes = {JooqConfig.class})
 @ActiveProfiles("jooq")
-public class PersonNameJooqRepositoryTest {
+public class BriefPersonInfoJooqRepositoryTest {
 
     @Autowired
     private PersonJooqRepository personJooqRepository;

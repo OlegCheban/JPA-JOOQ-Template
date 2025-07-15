@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Testcontainers
 @DataJpaTest
 @ContextConfiguration(classes = {JpaConfig.class})
-public class PersonNameJpaRepositoryTest {
+public class BriefPersonInfoJpaRepositoryTest {
 
     @Autowired
     private PersonJpaRepository personJpaRepository;
