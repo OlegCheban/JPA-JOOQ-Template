@@ -8,14 +8,15 @@ spring:
     show-sql: true
 
   datasource:
+    #https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
     hikari:
       auto-commit: false
       max-lifetime: 30000
       connection-timeout: 15000
       #https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+      #https://github.com/brettwooldridge/HikariCP/issues/1023
       maximum-pool-size: 10
       leak-detection-threshold: 60000
-
 
   liquibase:
     liquibase-schema: public
