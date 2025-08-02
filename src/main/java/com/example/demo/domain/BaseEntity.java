@@ -1,9 +1,8 @@
 package com.example.demo.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import java.util.Objects;
 
@@ -12,6 +11,16 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "prefer_sequence_per_entity", value = "true"),
+                    @Parameter(name = "sequence_per_entity_suffix", value = "_seq"),
+                    @Parameter(name = "increment_size", value = "10"),
+                    @Parameter(name = "allocationSize", value = "1"),
+            }
+    )
     private Long id;
 
     @Override

@@ -2,6 +2,9 @@
 
 --changeset ddl
 
+drop sequence if exists person_seq;
+create sequence person_seq start with 1 increment by 10;
+
 create table if not exists person(
     id bigint not null,
     name varchar(255) not null,
@@ -9,8 +12,8 @@ create table if not exists person(
     primary key (id)
 );
 
-drop sequence if exists person_seq;
-create sequence person_seq start with 1 increment by 50;
+drop sequence if exists person_phone_seq;
+create sequence person_phone_seq start with 1 increment by 10;
 
 create table if not exists person_phone(
     id bigint not null,
@@ -19,6 +22,3 @@ create table if not exists person_phone(
     constraint fk_phone_person foreign key (person_id) references person (id),
     constraint uk_phone_person unique (person_id, phone_number)
 );
-
-drop sequence if exists person_phone_seq;
-create sequence person_phone_seq start with 1 increment by 50;
