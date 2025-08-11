@@ -5,7 +5,7 @@ A pre-configured, performance-oriented Spring Boot template and cookbook for dat
 
 **Tech Stack**: Spring Boot, Maven, Hibernate, JOOQ, Liquibase, PostgreSQL, HikariCP, JUnit, Testcontainers.   
 
-## Key Features
+## Recommended Settings
 
 ### Open Session in View (OSIV) - Disabled
 
@@ -32,8 +32,6 @@ spring:
 - **Connection management efficiency**: A positive side effect of this setting is improved database connection management. Spring will not open a database connection until it reaches the point where it actually needs to access the database. This reduces idle connections and improves resource utilization. 
 - **Best practice alignment**: A good rule of thumb is to always disable auto-commit in HikariCP (or other connection pools) when using local JPA transactions.
 
-
-
 ### Liquibase Session-Level LockService
 
 ```xml
@@ -48,14 +46,8 @@ spring:
 - **Automatic lock cleanup**: Session-level locks are automatically released when the database connection drops, eliminating the common issue of stuck locks in the `DATABASECHANGELOGLOCK` table.
 - **Improved reliability**: Prevents deployment failures caused by previous migration processes that terminated unexpectedly without releasing their locks.
 
-## 📚 Cookbook
+## Links
 
-For comprehensive examples and best practices on optimizing database operations in Spring Boot applications, visit our detailed cookbook:
-
-**[📖 View Full Cookbook in Wiki](https://github.com/OlegCheban/JPA-JOOQ-Template/wiki)**
-
-The cookbook covers real-world performance optimization scenarios including:
-- Transaction boundary optimization
-- Efficient entity reference handling
-- Dynamic projection patterns
-
+- [About Pool Sizing](https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing)
+- [About Pool Sizing in distributed environments](https://github.com/brettwooldridge/HikariCP/issues/1023)
+- [HikariCP Configuration](https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby)

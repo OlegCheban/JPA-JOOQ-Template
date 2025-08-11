@@ -2,6 +2,9 @@ spring:
   datasource:
     hikari:
       auto-commit: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
 
 logging:
   level:
