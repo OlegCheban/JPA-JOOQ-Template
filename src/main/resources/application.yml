@@ -2,10 +2,6 @@ spring:
   application:
     name: demo
 
-  jpa:
-    open-in-view: false
-    show-sql: true
-
   datasource:
     hikari:
       auto-commit: false
@@ -18,14 +14,13 @@ spring:
     liquibase-schema: public
     enabled: true
 
-decorator:
-  datasource:
-    flexy-pool:
-      threshold:
-        connection:
-          acquisition: 50
-          lease: 1000
+  jpa:
+    open-in-view: false
 
-logging:
-  level:
-    org.hibernate.engine.transaction.internal.TransactionImpl: DEBUG
+#decorator:
+#  datasource:
+#    flexy-pool:
+#      threshold:
+#        connection:
+#          acquisition: 50
+#          lease: 1000
