@@ -107,6 +107,26 @@ User findUserWithOrders(@Param("id") Long id);
 Optional<User> findWithOrdersById(Long id);
 ```
 
+#### Dynamic Projection Methods
+- **Use dynamic projection methods** for fetching projections when a WHERE clause can be derived from the method name
+
+```java
+// ✅ Dynamic projection - Spring Data JPA handles projection automatically
+public interface UserRepository extends JpaRepository<User, Long> {
+    <T> T findById(Long id, Class<T> type);
+    <T> List<T> findByActiveTrue(Class<T> type);
+    <T> Optional<T> findByEmail(String email, Class<T> type);
+}
+
+// Usage examples
+UserSummary summary = userRepository.findById(1L, UserSummary.class);
+UserDto dto = userRepository.findById(1L, UserDto.class);
+List<UserSummary> activeSummaries = userRepository.findByActiveTrue(UserSummary.class);
+
+// Projection record
+public record UserSummary(Long id, String name, String email) {}
+```
+
 #### Bulk Operations
 - **Use `@DynamicUpdate`** for entities with large numbers of columns to generate UPDATE statements with only changed fields
 
