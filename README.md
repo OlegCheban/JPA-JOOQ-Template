@@ -6,6 +6,8 @@ A pre-configured, performance-oriented Spring Boot template for database operati
 
 **Tech Stack:** Spring Boot, Maven, Hibernate, JOOQ, Liquibase, PostgreSQL, HikariCP, JUnit, Testcontainers.
 
+**Important:** This template includes Hibernate/JPA, which adds complexity and overhead. Use it only if you intentionally want an ORM and benefit from its features. You probably want this template if you have rich domain models with non-trivial business logic and invariants, lots of complex writing operations, or you need specific Hibernate features like second-level caching.
+
 ## Performance Configuration Guidelines
 
 ### Core Framework Settings
