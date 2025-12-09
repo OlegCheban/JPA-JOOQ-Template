@@ -2,7 +2,7 @@
 
 # JPA-JOOQ-Template
 
-A pre-configured Spring Boot template for database operations, combining JPA (Hibernate) for ORM and JOOQ for type-safe SQL. The configuration have been implemented to maximize performance and resource efficiency.
+A pre-configured Spring Boot template for database operations, combining JPA (Hibernate) for ORM and JOOQ for type-safe SQL. The configuration has been implemented to maximize performance and resource efficiency.
 
 **Tech Stack:** Spring Boot, Maven, Hibernate, JOOQ, Liquibase, PostgreSQL, HikariCP, JUnit, Testcontainers.
 
