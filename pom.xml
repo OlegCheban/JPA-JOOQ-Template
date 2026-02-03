@@ -120,7 +120,7 @@
 			<plugin>
 				<groupId>org.jooq</groupId>
 				<artifactId>jooq-codegen-maven</artifactId>
-				<version>3.19.23</version>
+				<version>3.20.11</version>
 				<executions>
 					<execution>
 						<id>jooq-codegen</id>
