@@ -10,28 +10,40 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest ]
-        java: [ 17,21 ]
+        os: [ubuntu-latest]
+        java: [24]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: demo
+          POSTGRES_USER: demo
+          POSTGRES_PASSWORD: demo
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U demo -d demo"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up JDK 24
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
-          java-version: '24'
-          distribution: 'temurin'
-
-      - name: Set Maven Properties for jOOQ
-        run: |
-          echo "db.url=${{ secrets.DEMO_DB_URL }}" >> $GITHUB_ENV
-          echo "db.user=${{ secrets.DEMO_DB_USER }}" >> $GITHUB_ENV
-          echo "db.password=${{ secrets.DEMO_DB_PASS }}" >> $GITHUB_ENV
+          java-version: ${{ matrix.java }}
+          distribution: temurin
 
       - name: Build with Maven
-        run: mvn clean install
-        env:
-          DEMO_DB_URL: ${{ secrets.DEMO_DB_URL }}
-          DEMO_DB_USER: ${{ secrets.DEMO_DB_USER }}
-          DEMO_DB_PASS: ${{ secrets.DEMO_DB_PASS }}
+        run: |
+          mvn clean \
+            -Ddb.url=jdbc:postgresql://localhost:5432/demo?prepareThreshold=0 \
+            -Dusername=demo \
+            -Dpassword=demo \
+            -Ddb.driver=org.postgresql.Driver \
+            liquibase:update \
+            generate-sources \
+            install -DskipTests
