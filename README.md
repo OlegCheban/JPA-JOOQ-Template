@@ -8,7 +8,32 @@ A pre-configured Spring Boot template for database operations, combining JPA (Hi
 
 **Important:** This template includes Hibernate/JPA, which adds complexity and overhead. Use it only if you intentionally want an ORM and benefit from its features. You probably want this template if you have rich domain models with non-trivial business logic and invariants, lots of complex writing operations, or you need specific Hibernate features.
 
-## Configuration Guidelines
+### Build
+
+1. Start PostgreSQL with Docker Compose:
+
+```bash
+docker compose up -d postgres
+```
+
+2. Get the mapped PostgreSQL port:
+
+```bash
+docker compose port postgres 5432
+```
+
+3. Build the project (replace `<port>` with the mapped port from step 2):
+
+```bash
+mvn clean \
+  -Ddb.url=jdbc:postgresql://localhost:<port>/demo?prepareThreshold=0 \
+  -Dusername=demo \
+  -Dpassword=demo \
+  -Ddb.driver=org.postgresql.Driver \
+  liquibase:update \
+  generate-sources \
+  install -DskipTests
+```
 
 ### Core Framework Settings
 
