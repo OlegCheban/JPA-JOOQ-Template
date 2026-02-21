@@ -159,7 +159,7 @@
 				</executions>
 				<configuration>
 					<jdbc>
-						<driver>${db.driver}</driver>
+						<driver>org.postgresql.Driver</driver>
 						<url>${db.url}</url>
 						<user>${username}</user>
 						<password>${password}</password>
